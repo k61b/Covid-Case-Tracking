@@ -12,27 +12,36 @@ export class DataServiceService {
   constructor(private http: HttpClient) { }
 
   getGlobalData() {
-    return this.http.get(this.globalDataUrl, {responseType: 'text'}).pipe(
+    return this.http.get(this.globalDataUrl, { responseType: 'text' }).pipe(
       map(result => {
         let data: GlobalDataSummary[] = [];
+        let raw = {}
         let rows = result.split('\n');
         rows.splice(0, 1);
 
         rows.forEach(row => {
           let cols = row.split(/,(?=\S)/);
-          data.push({
-            country : cols[3],
+
+          let cs = {
+            country: cols[3],
             confirmed: +cols[7],
             deaths: +cols[8],
             recovered: +cols[9],
             active: +cols[10]
-          })
-        })
+          };
+          let temp: GlobalDataSummary = raw[cs.country];
+          if (temp) {
+            temp.active = cs.active + temp.active
+            temp.confirmed = cs.confirmed + temp.confirmed
+            temp.deaths = cs.deaths + temp.deaths
+            temp.recovered = cs.recovered + temp.recovered
 
-        console.log(data);
-        
-
-        return [];
+            raw[cs.country] = temp;
+          } else {
+            raw[cs.country] = cs;
+          }
+        });
+        return <GlobalDataSummary[]>Object.values(raw);
       })
     )
   }
