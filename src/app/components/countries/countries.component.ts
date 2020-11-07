@@ -14,7 +14,7 @@ export class CountriesComponent implements OnInit {
   constructor(private service: DataServiceService) { }
 
   ngOnInit(): void {
-    this.service.getGlobalData().subscribe(result=> {
+    this.service.getGlobalData().subscribe(result => {
       this.data = result;
       this.data.forEach(cs => {
         this.countries.push(cs.country);
