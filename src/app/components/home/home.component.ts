@@ -59,7 +59,11 @@ export class HomeComponent implements OnInit {
       dataTable: datatable,
       //firstRowIsData: true,
       options: {
-        height: 500
+        height: 500,
+        animation: {
+          duration: 1000,
+          easing: 'out'
+        }
       },
     };
 
@@ -68,7 +72,11 @@ export class HomeComponent implements OnInit {
       dataTable: datatable,
       //firstRowIsData: true,
       options: {
-        height: 500
+        height: 500,
+        animation: {
+          duration: 1000,
+          easing: 'out'
+        }
       },
     };
   }
