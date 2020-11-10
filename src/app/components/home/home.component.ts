@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   totalActive = 0;
   totalDeaths = 0;
   totalRecovered = 0;
+  loading = true;
   globalData: GlobalDataSummary[];
   pieChart: GoogleChartInterface = {
     chartType: 'PieChart'
@@ -98,7 +99,9 @@ export class HomeComponent implements OnInit {
             })
 
             this.initChart('c');
-            
+          },
+          complete: () => {
+            this.loading = false;
           }
         }
       )
